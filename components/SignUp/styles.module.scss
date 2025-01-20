@@ -1,29 +1,82 @@
+.signup {
+    display: flex;
+    flex-direction: column;
+
+    @media (max-width: 768px) {
+        padding: 0 1rem;
+    }
+
+    @media (max-width: 500px) {
+        flex-direction: column-reverse;
+    }
+}
+
 .banner_container {
     position: relative;
     height: 300px;
 
     @media (max-width: 768px) {
         max-width: 700px;
-        margin: 0 auto;
     }
+
+    img {
+        object-position: center;
+
+        @media (max-width: 500px) {
+            object-position: top;
+            height: auto !important;
+            max-height: 300px !important;
+        }
+    }
+
 } 
 
 .form {
     margin: 25px auto;
     width: 50%;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: .5rem;
+    flex-direction: column;
+    gap: 2rem;
+    
+    @media (max-width: 768px) {
+        width: 70%;
+    }
+
+    
+    @media (max-width: 500px) {
+        width: 100%;
+    }
+
+    &__button_container {
+        display: flex;
+        gap: 1rem;
+    }
+   
+
+    &__flex_container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: .5rem;
+
+        @media (max-width: 400px) {
+            gap: 0;
+        }
+    }
 
 
     // form group to group label and input element
     &__group {
-        flex: 1 1 45%;
+        flex: 1 1 47%;
         display: flex;
-        width: 45%;
+        width: 47%;
         flex-direction: column;
+        
+        &:not(:last-child) {
+            //margin on firstname and lastname to have a gap for country
+            margin-bottom: 1rem;
+        }
 
         label {
             display: block; 
@@ -53,13 +106,21 @@
         input[type="text"]::placeholder {
         color: #aaa;
         font-weight: lighter;
+
+            @media (max-width: 400px) {
+                font-size: 1.2rem;
+            }
         }
 
         select {
+            @media (max-width: 400px) {
+                font-size: 1.2rem;
+            }
 
             // setting color for select placeholder (option w/o value)
             &:required:invalid {
                 color: gray;
+
             }
 
             //setting default color for options
