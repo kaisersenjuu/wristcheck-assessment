@@ -1,0 +1,71 @@
+.banner_container {
+    position: relative;
+    height: 300px;
+
+    @media (max-width: 768px) {
+        max-width: 700px;
+        margin: 0 auto;
+    }
+} 
+
+.form {
+    margin: 25px auto;
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: .5rem;
+
+
+    // form group to group label and input element
+    &__group {
+        flex: 1 1 45%;
+        display: flex;
+        width: 45%;
+        flex-direction: column;
+
+        label {
+            display: block; 
+            margin-bottom: 5px; 
+            font-size: 1.2rem;
+            color: #858484;
+          }
+
+        input[type="text"],
+        select {
+        width: calc(100% - 12px); 
+        padding: 8px;
+        border: 1px solid #ccc; 
+        border-radius: 4px; 
+        box-sizing: border-box; 
+        font-size: 1.6rem; 
+        transition: border-color 0.3s ease; 
+        }
+
+        input[type="text"]:focus,
+        select:focus {
+        outline: none; 
+        border-color: #007bff; 
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); 
+        }
+
+        input[type="text"]::placeholder {
+        color: #aaa;
+        font-weight: lighter;
+        }
+
+        select {
+
+            // setting color for select placeholder (option w/o value)
+            &:required:invalid {
+                color: gray;
+            }
+
+            //setting default color for options
+           & > option {
+                color: black;
+            }
+        }
+    }
+}
