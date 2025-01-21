@@ -50,11 +50,17 @@ const Result: React.FunctionComponent = (): React.ReactElement => {
         />
       </div>
       <h3>
-        {`Welcome ${formValuesSelector.firstName} ${
-          formValuesSelector.lastName ? formValuesSelector.lastName : ""
+        {`Welcome ${
+          formValuesSelector.firstName.charAt(0).toUpperCase() +
+          formValuesSelector.firstName.slice(1).toLowerCase()
+        } ${
+          formValuesSelector.lastName
+            ? formValuesSelector.lastName.charAt(0).toUpperCase() +
+              formValuesSelector.lastName.slice(1).toLowerCase()
+            : ""
         } from ${formValuesSelector.country}
-and their watch worth ${`${symbol.symbol}`}${formValuesSelector.price}!
-`}
+      and their watch worth ${`${symbol.symbol}`}${formValuesSelector.price}!
+      `}
       </h3>
       <div className={styles.result__button_container}>
         <Button
@@ -62,7 +68,6 @@ and their watch worth ${`${symbol.symbol}`}${formValuesSelector.price}!
           type="secondary"
           buttonType="button"
           clicked={() => {
-            dispatch(clearForm());
             router.push("/");
           }}
         />

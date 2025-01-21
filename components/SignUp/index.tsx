@@ -1,5 +1,5 @@
 "use client";
-
+import { useEffect } from "react";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import Button from "../Button";
@@ -14,6 +14,7 @@ import { useRouter } from "next/navigation";
 interface SignupProps {
   countries: any[];
   countryOptions: { name: string }[];
+  ipCountry: string;
 }
 
 const formSchema = z.object({
@@ -33,6 +34,7 @@ type FormData = z.infer<typeof formSchema>;
 const SignUp: React.FunctionComponent<SignupProps> = ({
   countryOptions,
   countries,
+  ipCountry,
 }): React.ReactElement => {
   const formValuesSelector = useSelector((state: RootState) => state.form);
   const dispatch = useDispatch<AppDispatch>();
@@ -41,12 +43,13 @@ const SignUp: React.FunctionComponent<SignupProps> = ({
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       lastName: "",
-      country: "",
+      country: ipCountry,
     },
   });
 
@@ -108,30 +111,25 @@ const SignUp: React.FunctionComponent<SignupProps> = ({
           </div>
           <div className={styles.form__group}>
             <label htmlFor="country">Country</label>
-            <select
-              id="country"
-              required
-              defaultValue=""
-              {...register("country")}
-            >
-              <option
-                disabled
-                hidden
-                value=""
+            {countryOptions.length > 1 && ipCountry && (
+              <select
+                id="country"
+                required
+                defaultValue=""
+                {...register("country")}
               >
-                Select your country
-              </option>
-              {countryOptions.map((country: any) => {
-                return (
-                  <option
-                    key={country.name}
-                    value={country.name}
-                  >
-                    {country.name}
-                  </option>
-                );
-              })}
-            </select>
+                {countryOptions.map((country: any) => {
+                  return (
+                    <option
+                      key={country.name}
+                      value={country.name}
+                    >
+                      {country.name}
+                    </option>
+                  );
+                })}
+              </select>
+            )}
             {errors.country && (
               <p className={styles.signup__error}>{errors.country.message}</p>
             )}

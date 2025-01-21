@@ -7,11 +7,16 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [ipCountry, setIpCountry] = useState("");
   const [countries, setCountries] = useState<any>([]);
   const [options, setOptions] = useState<{ name: string }[]>([]);
+
   useEffect(() => {
-    const fetchCountries = async () => {
+    const fetchCountriesAndIPLocation = async () => {
       try {
+        const locationFetch = await axios.get(`http://ip-api.com/json/`);
+
+        setIpCountry(locationFetch.data.country);
         const countriesFetch = await axios.get(
           "https://restcountries.com/v3.1/all"
         );
@@ -28,17 +33,22 @@ export default function Home() {
       }
     };
 
-    fetchCountries();
+    fetchCountriesAndIPLocation();
   }, []);
   return (
     <div>
       <main>
         <Container>
           <Wrapper>
-            <SignUp
-              countryOptions={options}
-              countries={countries}
-            />
+            {ipCountry && options.length >= 1 ? (
+              <SignUp
+                countryOptions={options}
+                countries={countries}
+                ipCountry={ipCountry}
+              />
+            ) : (
+              <div></div>
+            )}
           </Wrapper>
         </Container>
       </main>
