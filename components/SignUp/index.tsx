@@ -48,8 +48,6 @@ const SignUp: React.FunctionComponent<SignupProps> = ({
     },
   });
 
-  console.log(formValuesSelector, "[from homepage]");
-
   const homeSubmitHandler = (data: FormData) => {
     dispatch(
       updateForm({

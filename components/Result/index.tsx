@@ -18,8 +18,6 @@ const Result: React.FunctionComponent = (): React.ReactElement => {
   const [avatarError, setAvatarError] = useState<boolean>(false);
   const avatarURL = `https://api.dicebear.com/9.x/big-smile/svg?seed=${formValuesSelector.firstName}`;
 
-  console.log(formValuesSelector, "from results page");
-
   useEffect(() => {
     const getAvatar = async () => {
       try {
