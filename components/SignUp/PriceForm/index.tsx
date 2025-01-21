@@ -69,6 +69,7 @@ const PriceForm: React.FunctionComponent = (): React.ReactElement => {
             type="secondary"
             buttonType="button"
             clicked={() => {
+              dispatch(clearForm());
               router.push("/");
             }}
           />

@@ -62,6 +62,7 @@ and their watch worth ${`${symbol.symbol}`}${formValuesSelector.price}!
           type="secondary"
           buttonType="button"
           clicked={() => {
+            dispatch(clearForm());
             router.push("/");
           }}
         />

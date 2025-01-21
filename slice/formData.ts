@@ -12,7 +12,13 @@ const initialState: FormInputs = {
   firstName: "",
   lastName: "",
   country: "",
-  countryData: {},
+  countryData: {
+    currencies: {
+      default: {
+        symbol: "$",
+      },
+    },
+  },
   price: 0,
 };
 
