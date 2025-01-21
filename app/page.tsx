@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 export default function Home() {
   const [countries, setCountries] = useState<any>([]);
   const [options, setOptions] = useState<{ name: string }[]>([]);
-  // console.log(options, "from state");
   useEffect(() => {
     const fetchCountries = async () => {
       try {
