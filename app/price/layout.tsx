@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import "../styles/globals.scss";
+import "../../styles/globals.scss";
 
 export const metadata: Metadata = {
-  title: "Homepage",
+  title: "Price Page",
   description: "Wristcheck Assessment - Jason Concepcion",
 };
 
-export default function RootLayout({
+export default function PriceLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;

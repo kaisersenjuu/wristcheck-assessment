@@ -11,6 +11,7 @@
     }
 }
 
+
 .banner_container {
     position: relative;
     height: 300px;
@@ -47,6 +48,13 @@
         width: 100%;
     }
 
+    &__input_icon {
+        position: absolute;
+        font-size: 1.6rem;
+        top: 50%;
+        left: 10px;
+    }
+
     &__button_container {
         display: flex;
         gap: 1rem;
@@ -72,7 +80,7 @@
         display: flex;
         width: 47%;
         flex-direction: column;
-        
+        position: relative;
         &:not(:last-child) {
             //margin on firstname and lastname to have a gap for country
             margin-bottom: 1rem;
@@ -86,8 +94,9 @@
           }
 
         input[type="text"],
+        input[type="number"],
         select {
-        width: calc(100% - 12px); 
+        width: 100%; 
         padding: 8px;
         border: 1px solid #ccc; 
         border-radius: 4px; 
@@ -97,13 +106,14 @@
         }
 
         input[type="text"]:focus,
+        input[type="number"]:focus,
         select:focus {
         outline: none; 
         border-color: #007bff; 
         box-shadow: 0 0 5px rgba(0, 123, 255, 0.25); 
         }
 
-        input[type="text"]::placeholder {
+        input[type="text"]::placeholder, input[type="number"]::placeholder {
         color: #aaa;
         font-weight: lighter;
 
@@ -127,6 +137,21 @@
            & > option {
                 color: black;
             }
+        }
+    }
+}
+
+.input {
+    &_with_icon {
+        padding-left: 25px !important;
+
+        &::placeholder {
+            padding-left: 0px !important;
+        }
+
+        &::-webkit-outer-spin-button, &::-webkit-inner-spin-button {
+            margin: 0;
+            -webkit-appearance: none;
         }
     }
 }
