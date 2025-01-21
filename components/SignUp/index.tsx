@@ -12,7 +12,8 @@ import { updateForm } from "@/slice/formData";
 import { useRouter } from "next/navigation";
 
 interface SignupProps {
-  page: string;
+  countries: any[];
+  countryOptions: { name: string }[];
 }
 
 const formSchema = z.object({
@@ -30,7 +31,8 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const SignUp: React.FunctionComponent<SignupProps> = ({
-  page,
+  countryOptions,
+  countries,
 }): React.ReactElement => {
   const formValuesSelector = useSelector((state: RootState) => state.form);
   const dispatch = useDispatch<AppDispatch>();
@@ -49,14 +51,18 @@ const SignUp: React.FunctionComponent<SignupProps> = ({
   });
 
   const homeSubmitHandler = (data: FormData) => {
+    const countryData = countries.filter((country: any) => {
+      return data.country === country.name.common;
+    });
+
     dispatch(
       updateForm({
         firstName: data.firstName,
         lastName: data.lastName,
         country: data.country,
+        countryData: countryData[0],
       })
     );
-
     router.push("/price");
   };
 
@@ -115,7 +121,16 @@ const SignUp: React.FunctionComponent<SignupProps> = ({
               >
                 Select your country
               </option>
-              <option value="PH">Philippines</option>
+              {countryOptions.map((country: any) => {
+                return (
+                  <option
+                    key={country.name}
+                    value={country.name}
+                  >
+                    {country.name}
+                  </option>
+                );
+              })}
             </select>
             {errors.country && (
               <p className={styles.signup__error}>{errors.country.message}</p>

@@ -4,6 +4,7 @@ interface FormInputs {
   firstName: string;
   lastName?: string;
   country: string;
+  countryData: any;
   price: number;
 }
 
@@ -11,6 +12,7 @@ const initialState: FormInputs = {
   firstName: "",
   lastName: "",
   country: "",
+  countryData: {},
   price: 0,
 };
 

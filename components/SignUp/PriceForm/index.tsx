@@ -21,6 +21,10 @@ type FormData = z.infer<typeof formSchema>;
 
 const PriceForm: React.FunctionComponent = (): React.ReactElement => {
   const formValuesSelector = useSelector((state: RootState) => state.form);
+  const symbol: any = formValuesSelector.countryData
+    ? Object.values(formValuesSelector.countryData.currencies)[0]
+    : "";
+
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
   const {
@@ -56,7 +60,7 @@ const PriceForm: React.FunctionComponent = (): React.ReactElement => {
               className={styles.input_with_icon}
               {...register("price", { valueAsNumber: true })}
             />
-            <span className={styles.form__input_icon}>$</span>
+            <span className={styles.form__input_icon}>{symbol.symbol}</span>
           </div>
         </div>
         <div className={styles.form__button_container}>
@@ -65,7 +69,6 @@ const PriceForm: React.FunctionComponent = (): React.ReactElement => {
             type="secondary"
             buttonType="button"
             clicked={() => {
-              dispatch(clearForm());
               router.push("/");
             }}
           />

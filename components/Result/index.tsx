@@ -14,6 +14,9 @@ const Result: React.FunctionComponent = (): React.ReactElement => {
   const formValuesSelector = useSelector((state: RootState) => state.form);
   const dispatch = useDispatch<AppDispatch>();
   const router = useRouter();
+  const symbol: any = formValuesSelector.countryData
+    ? Object.values(formValuesSelector.countryData.currencies)[0]
+    : "";
 
   const [avatarError, setAvatarError] = useState<boolean>(false);
   const avatarURL = `https://api.dicebear.com/9.x/big-smile/svg?seed=${formValuesSelector.firstName}`;
@@ -50,7 +53,7 @@ const Result: React.FunctionComponent = (): React.ReactElement => {
         {`Welcome ${formValuesSelector.firstName} ${
           formValuesSelector.lastName ? formValuesSelector.lastName : ""
         } from ${formValuesSelector.country}
-and their watch worth ${`$`}${formValuesSelector.price}!
+and their watch worth ${`${symbol.symbol}`}${formValuesSelector.price}!
 `}
       </h3>
       <div className={styles.result__button_container}>
@@ -59,7 +62,6 @@ and their watch worth ${`$`}${formValuesSelector.price}!
           type="secondary"
           buttonType="button"
           clicked={() => {
-            dispatch(clearForm());
             router.push("/");
           }}
         />
