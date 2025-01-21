@@ -5,6 +5,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import Button from "@/components/Button";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store";
+import { updateForm, clearForm } from "@/slice/formData";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
   price: z
@@ -16,6 +20,9 @@ const formSchema = z.object({
 type FormData = z.infer<typeof formSchema>;
 
 const PriceForm: React.FunctionComponent = (): React.ReactElement => {
+  const formValuesSelector = useSelector((state: RootState) => state.form);
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,11 +34,9 @@ const PriceForm: React.FunctionComponent = (): React.ReactElement => {
     },
   });
 
-  console.log(errors);
-
   const priceSubmitHandler = (data: FormData) => {
-    console.log("Form data:", data);
-    alert(JSON.stringify(data));
+    dispatch(updateForm({ price: data.price }));
+    router.push("/results");
   };
 
   return (
@@ -59,7 +64,10 @@ const PriceForm: React.FunctionComponent = (): React.ReactElement => {
             text="back"
             type="secondary"
             buttonType="button"
-            clicked={() => alert("test")}
+            clicked={() => {
+              dispatch(clearForm());
+              router.push("/");
+            }}
           />
           <Button
             text="continue"

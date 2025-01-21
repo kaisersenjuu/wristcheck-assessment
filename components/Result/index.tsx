@@ -5,10 +5,20 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 import axios from "axios";
 import Button from "../Button";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store";
+import { clearForm } from "@/slice/formData";
+import { useRouter } from "next/navigation";
 
 const Result: React.FunctionComponent = (): React.ReactElement => {
+  const formValuesSelector = useSelector((state: RootState) => state.form);
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
+
   const [avatarError, setAvatarError] = useState<boolean>(false);
-  const avatarURL = "https://api.dicebear.com/9.x/big-smile/svg?seed=felix";
+  const avatarURL = `https://api.dicebear.com/9.x/big-smile/svg?seed=${formValuesSelector.firstName}`;
+
+  console.log(formValuesSelector, "from results page");
 
   useEffect(() => {
     const getAvatar = async () => {
@@ -39,14 +49,21 @@ const Result: React.FunctionComponent = (): React.ReactElement => {
         />
       </div>
       <h3>
-        {`Welcome <firstName> <lastName> from <country>
-and their watch worth <currency><amount>!
+        {`Welcome ${formValuesSelector.firstName} ${
+          formValuesSelector.lastName ? formValuesSelector.lastName : ""
+        } from ${formValuesSelector.country}
+and their watch worth ${`$`}${formValuesSelector.price}!
 `}
       </h3>
       <div className={styles.result__button_container}>
         <Button
           text="Reset"
           type="secondary"
+          buttonType="button"
+          clicked={() => {
+            dispatch(clearForm());
+            router.push("/");
+          }}
         />
       </div>
     </div>

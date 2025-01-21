@@ -6,6 +6,10 @@ import Button from "../Button";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "@/store";
+import { updateForm } from "@/slice/formData";
+import { useRouter } from "next/navigation";
 
 interface SignupProps {
   page: string;
@@ -28,6 +32,9 @@ type FormData = z.infer<typeof formSchema>;
 const SignUp: React.FunctionComponent<SignupProps> = ({
   page,
 }): React.ReactElement => {
+  const formValuesSelector = useSelector((state: RootState) => state.form);
+  const dispatch = useDispatch<AppDispatch>();
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -41,11 +48,18 @@ const SignUp: React.FunctionComponent<SignupProps> = ({
     },
   });
 
-  console.log(errors);
+  console.log(formValuesSelector, "[from homepage]");
 
   const homeSubmitHandler = (data: FormData) => {
-    console.log("Form data:", data);
-    alert(JSON.stringify(data));
+    dispatch(
+      updateForm({
+        firstName: data.firstName,
+        lastName: data.lastName,
+        country: data.country,
+      })
+    );
+
+    router.push("/price");
   };
 
   return (
